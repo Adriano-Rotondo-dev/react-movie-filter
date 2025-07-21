@@ -85,8 +85,8 @@ function App() {
         {filteredFilms.map((film, index) => {
           return (
             <li key={index} className="flex">
-              <span>{film.title}</span>
-              <span>{film.genre}</span>
+              <span className="liObj">{film.title}</span>
+              <span className="liObj">{film.genre}</span>
             </li>
           );
         })}
@@ -94,20 +94,22 @@ function App() {
       {/* al momento inserisco unicamente il genere per verificare il filtraggio */}
       {/* inserire un secondo imput per il titolo o farlo in solo imput? */}
       <form onSubmit={handleSubmit} className="form flex">
-        <input
-          className="input"
-          placeholder="Insert New Film Title"
-          type="text"
-          value={newFilm}
-          onChange={(e) => setNewFilm(e.target.value)}
-        />
-        <input
-          className="input"
-          placeholder="Insert New Film Genre"
-          type="text"
-          value={newGenre}
-          onChange={(e) => setNewGenre(e.target.value)}
-        />
+        <div className="inputContainer flex">
+          <input
+            className="input"
+            placeholder="Insert New Film Title"
+            type="text"
+            value={newFilm}
+            onChange={(e) => setNewFilm(e.target.value)}
+          />
+          <input
+            className="input"
+            placeholder="Insert New Film Genre"
+            type="text"
+            value={newGenre}
+            onChange={(e) => setNewGenre(e.target.value)}
+          />
+        </div>
         <button type="submit" className="save btn flex">
           <i class="fa-regular fa-floppy-disk"></i>
         </button>
