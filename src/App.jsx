@@ -8,16 +8,29 @@ function App() {
   const [films, setFilms] = useState(filmList);
   const [selectedGenre, setSelectedGenre] = useState({
     value: "",
-    label: "All Genres",
+    label: "All genres",
+  });
+  const [selectedTitle, setSelectedTitle] = useState({
+    value: "",
+    label: "All movie titles",
   });
   //dichiaro la variabile di stato
   const [filteredFilms, setFilteredFilms] = useState(filmList);
-  const options = [
+  const optionsGenres = [
     { value: "", label: "All genres" },
     { value: "Fantascienza", label: "Fantascienza" },
     { value: "Thriller", label: "Thriller" },
     { value: "Romantico", label: "Romantico" },
     { value: "Azione", label: "Azione" },
+  ];
+  const optionsTitles = [
+    { value: "", label: "All movie titles" },
+    { value: "Inception", label: "Inception" },
+    { value: "Il Padrino", label: "Il Padrino" },
+    { value: "Titanic", label: "Titanic" },
+    { value: "Batman", label: "Batman" },
+    { value: "Interstellar", label: "Intersellar" },
+    { value: "Pulp Fiction", label: "Pulp Fiction" },
   ];
   //invoco la funzione useEffect per renderizzare i film selezionati o visualizzarli tutti
   //callback function e dipendenze
@@ -30,7 +43,15 @@ function App() {
       );
     }
   }, [films, selectedGenre]);
-
+  useEffect(() => {
+    if (selectedTitle.value === "") {
+      setFilteredFilms(films);
+    } else {
+      setFilteredFilms(
+        films.filter((film) => film.title === selectedTitle.value)
+      );
+    }
+  });
   function handleSubmit(e) {
     e.preventDefault();
     //  è un oggetto, non una stringa.
@@ -41,10 +62,17 @@ function App() {
       <h2>This is your Film List</h2>
 
       <Select
-        options={options}
+        options={optionsGenres}
         value={selectedGenre}
         onChange={setSelectedGenre}
         placeholder="Select genre"
+        className="select"
+      />
+      <Select
+        options={optionsTitles}
+        value={selectedTitle}
+        onChange={setSelectedTitle}
+        placeholder="Select title"
         className="select"
       />
       <ul className="list flex">
