@@ -109,7 +109,7 @@ function App() {
           onChange={(e) => setNewGenre(e.target.value)}
         />
         <button type="submit" className="save btn flex">
-          Save the New Film and Genre
+          <i class="fa-regular fa-floppy-disk"></i>
         </button>
       </form>
     </div>
