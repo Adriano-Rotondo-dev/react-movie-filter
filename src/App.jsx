@@ -10,6 +10,8 @@ function App() {
     value: "",
     label: "All Genres",
   });
+  //dichiaro la variabile di stato
+  const [filteredFilms, setFilteredFilms] = useState(filmList);
   const options = [
     { value: "", label: "All genres" },
     { value: "Fantascienza", label: "Fantascienza" },
@@ -17,15 +19,21 @@ function App() {
     { value: "Romantico", label: "Romantico" },
     { value: "Azione", label: "Azione" },
   ];
-
-  let filteredFilms = films;
-  if (selectedGenre.value !== "") {
-    filteredFilms = films.filter((film) => film.genre === selectedGenre.value);
-  }
+  //invoco la funzione useEffect per renderizzare i film selezionati o visualizzarli tutti
+  //callback function e dipendenze
+  useEffect(() => {
+    if (selectedGenre.value === "") {
+      setFilteredFilms(films);
+    } else {
+      setFilteredFilms(
+        films.filter((film) => film.genre === selectedGenre.value)
+      );
+    }
+  }, [films, selectedGenre]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    // è un oggetto, non una stringa.
+    //  è un oggetto, non una stringa.
     setFilms([{ genre: newFilm }, ...films]); // inserisco il nuovo genere del film ed evito di sovrascrivere l'intero array precedente
   }
   return (
