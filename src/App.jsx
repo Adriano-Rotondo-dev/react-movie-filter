@@ -14,6 +14,11 @@ function App() {
     { value: "Azione", label: "Azione" },
   ];
 
+  let filteredFilms = films;
+  if (selectedGenre) {
+    filteredFilms = films.filter((film) => film.genre === selectedGenre.value);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     // è un oggetto, non una stringa.
@@ -31,7 +36,7 @@ function App() {
         className="select"
       />
       <ul className="list flex">
-        {films.map((film, index) => {
+        {filteredFilms.map((film, index) => {
           return (
             <li key={index} className="flex">
               <span>{film.title}</span>
