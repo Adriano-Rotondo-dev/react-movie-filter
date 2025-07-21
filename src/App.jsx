@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react";
+import Select from "react-select";
 
 import filmList from "./data/filmList";
 
 function App() {
   const [newFilm, setNewFilm] = useState("");
   const [films, setFilms] = useState(filmList);
-
-  //*crea un inserimento per il genere del film
+  const [selectedGenre, setSelectedGenre] = useState();
+  const options = [
+    { value: "Fantascienza", label: "Fantascienza" },
+    { value: "Thriller", label: "Thriller" },
+    { value: "Romantico", label: "Romantico" },
+    { value: "Azione", label: "Azione" },
+  ];
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -16,6 +22,14 @@ function App() {
   return (
     <div className="container flex">
       <h2>This is your Film List</h2>
+
+      <Select
+        options={options}
+        value={selectedGenre}
+        onChange={setSelectedGenre}
+        placeholder="Select genre"
+        className="select"
+      />
       <ul className="list flex">
         {films.map((film, index) => {
           return (
