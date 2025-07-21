@@ -4,18 +4,15 @@ import Select from "react-select";
 import filmList from "./data/filmList";
 
 function App() {
-  const [newFilm, setNewFilm] = useState("");
+  //dichiaro le variabili di stato
   const [films, setFilms] = useState(filmList);
+  const [filteredFilms, setFilteredFilms] = useState(filmList);
+  //dichiaro le variabili di selezione con useState di default
   const [selectedGenre, setSelectedGenre] = useState({
     value: "",
     label: "All genres",
   });
-  const [selectedTitle, setSelectedTitle] = useState({
-    value: "",
-    label: "All movie titles",
-  });
-  //dichiaro la variabile di stato
-  const [filteredFilms, setFilteredFilms] = useState(filmList);
+  // definisco l'aarray di selezione per genere
   const optionsGenres = [
     { value: "", label: "All genres" },
     { value: "Fantascienza", label: "Fantascienza" },
@@ -23,6 +20,11 @@ function App() {
     { value: "Romantico", label: "Romantico" },
     { value: "Azione", label: "Azione" },
   ];
+  const [selectedTitle, setSelectedTitle] = useState({
+    value: "",
+    label: "All movie titles",
+  });
+  // definisco l'aarray di selezione per titolo
   const optionsTitles = [
     { value: "", label: "All movie titles" },
     { value: "Inception", label: "Inception" },
@@ -32,8 +34,8 @@ function App() {
     { value: "Interstellar", label: "Intersellar" },
     { value: "Pulp Fiction", label: "Pulp Fiction" },
   ];
+
   //invoco la funzione useEffect per renderizzare i film selezionati o visualizzarli tutti
-  //callback function e dipendenze
   useEffect(() => {
     if (selectedGenre.value === "") {
       setFilteredFilms(films);
@@ -51,11 +53,15 @@ function App() {
         films.filter((film) => film.title === selectedTitle.value)
       );
     }
-  });
+  }, [films, selectedTitle]);
+  // definisco le variabili per l'inserimento di nuovi titoli e genere collegato
+  const [newFilm, setNewFilm] = useState("");
+  const [newGenre, setNewGenre] = useState("");
+  //invoco la funzione per renderizzare nuovi contenuti
   function handleSubmit(e) {
     e.preventDefault();
     //  è un oggetto, non una stringa.
-    setFilms([{ genre: newFilm }, ...films]); // inserisco il nuovo genere del film ed evito di sovrascrivere l'intero array precedente
+    setFilms([{ title: newFilm, genre: newGenre }, ...films]); // inserisco i dati del nuovo film
   }
   return (
     <div className="container flex">
@@ -90,13 +96,20 @@ function App() {
       <form onSubmit={handleSubmit} className="form flex">
         <input
           className="input"
-          placeholder="Insert New Film"
+          placeholder="Insert New Film Title"
           type="text"
           value={newFilm}
           onChange={(e) => setNewFilm(e.target.value)}
         />
+        <input
+          className="input"
+          placeholder="Insert New Film Genre"
+          type="text"
+          value={newGenre}
+          onChange={(e) => setNewGenre(e.target.value)}
+        />
         <button type="submit" className="save btn flex">
-          Save the New Film
+          Save the New Film and Genre
         </button>
       </form>
     </div>
