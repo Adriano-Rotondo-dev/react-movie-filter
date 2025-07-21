@@ -6,8 +6,12 @@ import filmList from "./data/filmList";
 function App() {
   const [newFilm, setNewFilm] = useState("");
   const [films, setFilms] = useState(filmList);
-  const [selectedGenre, setSelectedGenre] = useState();
+  const [selectedGenre, setSelectedGenre] = useState({
+    value: "",
+    label: "All Genres",
+  });
   const options = [
+    { value: "", label: "All genres" },
     { value: "Fantascienza", label: "Fantascienza" },
     { value: "Thriller", label: "Thriller" },
     { value: "Romantico", label: "Romantico" },
@@ -15,7 +19,7 @@ function App() {
   ];
 
   let filteredFilms = films;
-  if (selectedGenre) {
+  if (selectedGenre.value !== "") {
     filteredFilms = films.filter((film) => film.genre === selectedGenre.value);
   }
 
